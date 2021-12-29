@@ -80,6 +80,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
+	t_list *lst_env;
+
 	lst_env = NULL;
 	lst_export = NULL;
 
@@ -101,7 +103,7 @@ int	main(int ac, char **av, char **env)
 
 	ft_lstiter(exec_head, &exec_print);
 
-	exec_cmds(exec_head, env);
+	exec_cmds(exec_head, env, lst_env);
 
 
 	/*while (1)

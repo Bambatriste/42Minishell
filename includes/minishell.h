@@ -68,7 +68,7 @@ typedef struct s_command
 }	        t_cmd;
 
 
-int exec_cmds(t_list *lst, char **envp);
+int exec_cmds(t_list *lst, char **envp, t_list *env);
 void	builtin_echo(char **av);
 void	builtin_pwd();
 void	builtin_unset(t_list *lst, char **strs);
@@ -147,5 +147,9 @@ int	spec_last_first_token(t_tokenl *token, int *key);
 int	spec_redir(t_tokenl *token);
 void	spec_cmd(t_tokenl *token, int *key);
 int	spec_types(t_tokenl *first);
+
+/*	GET PATH */
+
+char **get_paths(t_list *env);
 
 #endif

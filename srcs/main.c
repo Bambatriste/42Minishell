@@ -137,6 +137,13 @@ int	main(int ac, char **av, char **env)
 	t_tokenl *list = NULL;
 	t_cmd *cmds = NULL;
 	t_list *commands;
+
+
+
+	t_list *lst_env;
+
+	lst_env = NULL;
+	ft_lst_copyenv(env, &lst_env);
 	
 	while (1)
 	{
@@ -152,7 +159,7 @@ int	main(int ac, char **av, char **env)
 		cmds = get_cmd_lst(list);
 		commands = transform(cmds);
 		//print_cmd_lst(cmds);
-		exec_cmds(commands, env);
+		exec_cmds(commands, env, lst_env);
 	}
 	return (0);
 }

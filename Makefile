@@ -47,6 +47,7 @@ SRCS		=	main.c\
 				ft_sort_export.c\
 				ft_unset.c\
 				spec_tokens.c\
+				get_path.c\
 
 OBJS		= ${SRCS:.c=.o}
 
