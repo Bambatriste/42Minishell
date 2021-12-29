@@ -147,7 +147,7 @@ int	main(int ac, char **av, char **env)
 	
 	while (1)
 	{
-    	temp = readline(NULL);
+    	temp = readline("Minishell :");
 		if (temp == NULL || temp[0] == 0)
 			return (0);
 		if (list)
