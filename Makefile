@@ -1,43 +1,81 @@
-NAME = minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lnelson <lnelson@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/02 14:32:03 by lnelson           #+#    #+#              #
+#    Updated: 2021/12/29 18:07:34 by lnelson          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-LIBFT = libft/libft.a
+NAME		= minishell
 
-SRCS = main.c\
-		srcs/builtins/ft_cd.c\
-		srcs/builtins/ft_convert.c\
-		srcs/builtins/ft_copy_env.c\
-		srcs/builtins/ft_echo.c\
-		srcs/builtins/ft_env.c\
-		srcs/builtins/ft_exit.c\
-		srcs/builtins/ft_export.c\
-		srcs/builtins/ft_pwd.c\
-		srcs/builtins/ft_search_value.c\
-		srcs/builtins/ft_sort_export.c\
-		srcs/builtins/ft_unset.c\
-		srcs/test_parsing/exec_test_parsing.c\
-		srcs/exec/exec.c
-		
-CC = clang
+SRCS_DIR	= srcs/
 
-OBJS = ${SRCS:.c=.o}
+OBJS_DIR	= objs/
 
-CFLAGS = -g3
+INCLS_DIR	= includes/
 
-all : $(NAME)
+LIBS_DIR	= libft/
 
-.c.o :
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o} 
+CFLAGS		= -Wall -Wextra -Werror -I ${INCLS_DIR} -g3
 
-$(NAME): ${OBJS}
-		make -C libft
-		${CC} -o ${NAME} ${OBJS} ${LIBFT} -lreadline
+FLAGS		= -L ${LIBS_DIR} -lft -lreadline
 
-clean :
-		rm -rf ${OBJS}
+CC			= gcc
 
-fclean: clean
-		rm -rf ${NAME}
+SRCS		=	main.c\
+				exec.c\
+				ft_cmd_get_add.c\
+				ft_convert.c\
+				ft_env.c\
+				ft_export.c\
+				ft_redir_lst.c\
+				ft_tok_lst.c\
+				get_lists.c\
+				parce_tokens.c\
+				utils.c\
+				ft_cd.c\
+				ft_cmd_lst.c\
+				ft_copy_env.c\
+				ft_echo.c\
+				ft_exit.c\
+				ft_pwd.c\
+				ft_search_value.c\
+				ft_sort_export.c\
+				ft_unset.c\
+				spec_tokens.c\
 
-re:		fclean all
+OBJS		= ${SRCS:.c=.o}
 
-.PHONY: all clean fclean re
+OBJS		:= ${addprefix ${OBJS_DIR}, ${OBJS}}
+
+${OBJS_DIR}%.o: ${SRCS_DIR}%.c
+			${CC} ${CFLAGS} -c $< -o $@
+
+all:		${NAME}
+
+${NAME}:	${OBJS}
+			make -C ${LIBS_DIR}
+			${CC} -o $@ ${OBJS} ${FLAGS} ${MLX_FLAGS}
+
+sanitize:	${OBJS}
+			make -C ${LIBS_DIR}
+			${CC} -o $@ ${OBJS} ${FLAGS} ${MLX_FLAGS} -g3 -fsanitize=address	
+
+clean:
+			make clean -C ${LIBS_DIR}
+			${RM} ${OBJS}
+
+cclean:
+			${RM} ${OBJS}
+			
+fclean:		clean
+			make fclean -C ${LIBS_DIR}
+			${RM} ${NAME} sanitize
+
+re:			fclean all
+
+RM			= rm -f
